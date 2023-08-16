@@ -37,6 +37,11 @@ public class Game {
         String[] drawnCardsForPlayerOne = apiCalls.drawCardFromDeck("7");
         String[] drawnCardsForPlayerTwo = apiCalls.drawCardFromDeck("7");
 
+        apiCalls.listPiles("playerOne", null);
+        apiCalls.listPiles("playerTwo", null);
+        apiCalls.listPiles("winPlayerOne", null);
+        apiCalls.listPiles("winPlayerTwo", null);
+
 
         apiCalls.addingToPiles(null, "playerOne", drawnCardsForPlayerOne);
         apiCalls.addingToPiles(null, "playerTwo", drawnCardsForPlayerTwo);

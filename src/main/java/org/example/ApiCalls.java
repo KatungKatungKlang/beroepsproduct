@@ -111,6 +111,10 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
                     getJSONObject(pileName).
                     getJSONArray("cards");
 
+        }catch(UnirestException u){
+            if(response==null){
+                System.out.println(pileName + " doesn't exist");
+            }
 
         }catch (JSONException e){
             System.out.println(e.getMessage());
