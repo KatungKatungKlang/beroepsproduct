@@ -208,6 +208,7 @@ public class Game {
         }
     }
 
+    //comment
     private void resetGame() throws UnirestException {
         System.out.println("Do you wanna start a new game? y/n");
         String answer = scanner.nextLine().toLowerCase();
