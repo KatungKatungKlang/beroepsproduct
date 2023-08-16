@@ -6,12 +6,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import javax.xml.transform.Result;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 
 public class ApiCalls {
 
@@ -121,7 +116,6 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
             System.out.println(e.getMessage());
         pile.add(e.getMessage() + " uhh meow?");
         return pile;
-        // ? make this return an array with the error msg as an element daarna ga je naar check method
     }
 
     for(int i = 0; i<pileCards.length(); i++) {

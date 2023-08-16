@@ -206,7 +206,6 @@ public class Game {
                 resetGame();
             }
         }
-
     }
 
     private void resetGame() throws UnirestException {
