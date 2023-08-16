@@ -116,7 +116,9 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
                     getJSONObject(pileName).
                     getJSONArray("cards");
 
+
         }catch (JSONException e){
+            System.out.println(e.getMessage());
         pile.add(e.getMessage() + " uhh meow?");
         return pile;
         // ? make this return an array with the error msg as an element daarna ga je naar check method
@@ -205,13 +207,23 @@ HttpResponse<JsonNode> response = null;
 
     public void oppenheimer(String pileToNuke, String deckId)throws UnirestException{
 
+
+    listPiles(pileToNuke, null);
+
         System.out.println("test: " + deckId);
-    listPiles(pileToNuke, getDeckId());
+        ArrayList<String> nukeThisPile = returnPile(pileToNuke, getDeckId());
+        HttpResponse<JsonNode> response = null;
 
+        try {
 
-        HttpResponse<JsonNode> response =
-                Unirest.get("https://deckofcardsapi.com/api/deck/" + deckId +
-                        "/pile/" + pileToNuke + "/draw/?count=52").asJson();
+                    response = Unirest.get("https://deckofcardsapi.com/api/deck/" + deckId +
+                            "/pile/" + pileToNuke + "/draw/?count=" + nukeThisPile.size()).asJson();
+
+            System.out.println(response.getBody());
+        } catch (UnirestException e) {
+            System.out.println();
+            System.out.println("Pile " +  pileToNuke + " wasn't created yet!");
+        }
 
         listPiles(pileToNuke, getDeckId());
 

@@ -9,13 +9,13 @@ public class Main {
         ApiCalls apiCalls = new ApiCalls();
 //        apiCalls.getNewDeck();
 
-     /*  Game gaem = new Game();
+       Game gaem = new Game();
         gaem.start();
-        while(true) {
+       /* while(true) {
             gaem.playerOneTurn();
             gaem.playerTwoTurn();
 
         }*/
-            apiCalls.oppenheimer("playerOne", apiCalls.getDeckId());
+
     }
 }

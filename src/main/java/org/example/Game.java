@@ -41,6 +41,13 @@ public class Game {
         apiCalls.addingToPiles(null, "playerOne", drawnCardsForPlayerOne);
         apiCalls.addingToPiles(null, "playerTwo", drawnCardsForPlayerTwo);
 
+        while(true) {
+            playerOneTurn();
+            playerTwoTurn();
+
+        }
+
+
     }
 
 
@@ -183,6 +190,7 @@ public class Game {
 
     private void alternateWinConCheck() throws UnirestException {
 
+        //als winplayerone zn pile niet leeg is gaat hij checken
         if(!apiCalls.returnPile("winPlayerOne", null).get(0).contains("meow")&&
         !apiCalls.returnPile("winPlayerTwo", null).get(0).contains("meow")) {
 
@@ -190,24 +198,34 @@ public class Game {
             int setsPlayerTwo = apiCalls.returnPile("winPlayerTwo", null).size()/4;
 
 
-            if (setsPlayerOne >= 7) {
+            if (setsPlayerOne >= 1) {
                 System.out.println("Congwatulations, UwU !!! You won, Player One <3<3<3 *Nuzzles your Weewee*");
-            } else if (setsPlayerTwo >= 7) {
-                System.out.println("Player two won");
+                resetGame();
+            } else if (setsPlayerTwo >= 1) {
+                System.out.println("Congwatulations, UwU !!! You won, Player Two <3<3<3 *Nuzzles your Weewee*");
+                resetGame();
             }
         }
 
     }
 
-    private void startNewGame(){
+    private void resetGame() throws UnirestException {
         System.out.println("Do you wanna start a new game? y/n");
         String answer = scanner.nextLine().toLowerCase();
-        if(answer.equals("y")){
+        if (answer.equals("y")) {
             System.out.println("Starting new game!");
+            apiCalls.oppenheimer("playerOne", apiCalls.getDeckId());
+            apiCalls.oppenheimer("playerTwo",      apiCalls.getDeckId());
+            apiCalls.oppenheimer("winPlayerOne", apiCalls.getDeckId());
+            apiCalls.oppenheimer("winPlayerTwo", apiCalls.getDeckId());
+
             String newDeck = apiCalls.getNewDeck();
-//            apiCalls.drawingFromPile()
+            apiCalls.setDeckId(newDeck);
 
+            start();
 
+        } else {
+            System.out.println("You should kys now! nyaaa <3");
         }
 
     }
