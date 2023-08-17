@@ -32,6 +32,7 @@ public class Game {
 
     }
 
+
     public void start() throws UnirestException {
 /*
         7 cards worden aan elke player gegeven
@@ -68,7 +69,7 @@ public class Game {
 
 
 
-    private void playerTurn(String player, String otherPlayer) throws UnirestException {
+    public void playerTurn(String player, String otherPlayer) throws UnirestException {
         ArrayList<String> pilePlayer = apiCalls.listPiles(player, null);
         apiCalls.listPiles(otherPlayer, null);
 
@@ -177,5 +178,3 @@ public class Game {
     }
 
 }
-
-

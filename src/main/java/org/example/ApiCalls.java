@@ -7,6 +7,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ApiCalls {
 
@@ -170,7 +171,7 @@ public ArrayList<String> returnPile(String pileName, String deckIds) throws Unir
 
 
 
-public ArrayList<String> searchPileForCardContainingThisNumberOrChar(ArrayList<String>pile, String number){
+public ArrayList<String> searchPileForCardContainingThisNumberOrChar(List<String> pile, String number){
 
     ArrayList<String>cardsOtherPlayerHas = new ArrayList<>();
 
