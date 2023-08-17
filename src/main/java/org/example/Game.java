@@ -10,8 +10,7 @@ import java.util.Scanner;
 
 public class Game {
 
-    /*  VOLGORDE!!!!
-      START => TURN METHOD STUFF => WINNEN??? => RESET*/
+
     ApiCalls apiCalls;
     Scanner scanner;
 
@@ -94,7 +93,7 @@ public class Game {
             apiCalls.drawingFromPile(cardsINeed, otherPlayer);
             apiCalls.addingToPiles(null, player, cardsINeed.toArray(new String[0]));
             checkCards(player);
-            playerTurn(player, otherPlayer); //pile for points, 4 kaarten vn zelfde soort (eg 4 kings = 1 pnt)
+            playerTurn(player, otherPlayer);
         }
     }
 
@@ -102,7 +101,7 @@ public class Game {
         //4 zelfde cards in player pile, word dan extracted naar player win pile
 
         Map<String, Integer> cardCounts = new HashMap<>(); // Map to store card counts
-        ArrayList<String> removedCards = new ArrayList<>();
+        ArrayList<String> removedCards = new ArrayList<>(); //arrayList to store elements to remove
 
         ArrayList<String> playersPiles = apiCalls.listPiles(player, null);
         for (String pile : playersPiles) {
@@ -132,19 +131,6 @@ public class Game {
             }
         }
         alternateWinConCheck();
-    }
-
-    private void winConditionCheck() throws UnirestException {
-        ArrayList<String> winPlayerOne = apiCalls.returnPile("winPlayerOne", null);
-        ArrayList<String> winPlayerTwo = apiCalls.returnPile("winPlayerTwo", null);
-
-        if(apiCalls.checkIfDeckIsEmpty() && apiCalls.returnPile("playerOne", null).isEmpty() && apiCalls.returnPile("playerTwo", null).isEmpty()){
-           if (apiCalls.returnPile("winPlayerOne", null).size()>apiCalls.returnPile("winPlayerTwo", null).size()){
-                            System.out.println("Player one won");
-                        } else if(apiCalls.returnPile("winPlayerTwo", null).size()>apiCalls.returnPile("winPlayerOne", null).size()){
-                            System.out.println("Player two won");
-                        }
-        }
     }
 
 

@@ -14,14 +14,8 @@ public class ApiCalls {
 
     private String deckId="";
     public ApiCalls(){
-         //idk comment so ik where i changed shit
+
     }
-
-
-
-
-
-
 
 public String getNewDeck() {
    Unirest.setTimeouts(0, 0);
@@ -36,20 +30,17 @@ public String getNewDeck() {
 }
 
 public String getDeckId(){
-    System.out.println(deckId); //remove inb4 cant find it
     return deckId;
 }
 
 
     public void setDeckId(String newDeckId){
-        System.out.println("new deck id");
         this.deckId=newDeckId;
     }
 
 
 public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestException {
 
-    System.out.println("New deck ID: " + deckId);
     String[]drawnCards = new String[7];
 
     Unirest.setTimeouts(0, 0);
@@ -72,7 +63,6 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
 
         String joinedString = String.join(",", cardsToAdd);
 
-        //todo: make different piles for player1_hand/player2_hand/set_pile maybe ig we did this?
         Unirest.setTimeouts(0, 0);
 
         HttpResponse<JsonNode> response =
@@ -179,7 +169,7 @@ public ArrayList<String> returnPile(String pileName, String deckIds) throws Unir
 }
 
 
-//todo: move this to an utility class or some shit dawg(static class)
+
 public ArrayList<String> searchPileForCardContainingThisNumberOrChar(ArrayList<String>pile, String number){
 
     ArrayList<String>cardsOtherPlayerHas = new ArrayList<>();
