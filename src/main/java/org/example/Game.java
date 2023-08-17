@@ -67,62 +67,7 @@ public class Game {
 
 
 
-    public void playerOneTurn() throws UnirestException {
 
-        apiCalls.listPiles("playerOne", null);
-        ArrayList<String> pilePlayerTwo = apiCalls.listPiles("playerTwo", null);
-
-        System.out.println("Player One, Which card do you want?");
-
-        String wantedCard = scanner.nextLine();
-        wantedCard = wantedCard.toUpperCase();
-
-        ArrayList<String> cardsINeed = apiCalls.searchPileForCardContainingThisNumberOrChar(pilePlayerTwo, wantedCard);//todo: remove hardcoded variables maybe?
-        System.out.println(cardsINeed);
-
-        if (cardsINeed.isEmpty()) {
-            System.out.println("Go Fish!");
-            String[] goFished = apiCalls.drawCardFromDeck("1");
-            System.out.println(goFished[0]); //now we add to pile
-            apiCalls.addingToPiles(null, "playerOne", goFished);
-            checkCards("playerOne");
-
-        } else {
-            apiCalls.drawingFromPile(cardsINeed, "playerTwo");
-            apiCalls.addingToPiles(null, "playerOne", cardsINeed.toArray(new String[0]));
-            checkCards("playerOne");
-            playerOneTurn();
-        }
-    }
-
-    public void playerTwoTurn() throws UnirestException {
-
-        ArrayList<String> pilePlayerOne = apiCalls.listPiles("playerOne", null);
-        apiCalls.listPiles("playerTwo", null);
-
-        System.out.println("Player Two, Which card do you want?");
-
-        String wantedCard = scanner.nextLine();
-        wantedCard = wantedCard.toUpperCase();
-
-        ArrayList<String> cardsINeed = apiCalls.searchPileForCardContainingThisNumberOrChar(pilePlayerOne, wantedCard);//todo: remove hardcoded variables maybe?
-        System.out.println(cardsINeed);
-
-        if (cardsINeed.isEmpty()) {
-            System.out.println("Go Fish!");
-            String[] goFished = apiCalls.drawCardFromDeck("1");
-            System.out.println(goFished[0]); //now we add to pile
-            apiCalls.addingToPiles(null, "playerTwo", goFished);
-            checkCards("playerTwo");
-
-
-        } else {
-            apiCalls.drawingFromPile(cardsINeed, "playerOne");
-            apiCalls.addingToPiles(null, "playerTwo", cardsINeed.toArray(new String[0]));
-            checkCards("playerTwo");
-            playerTwoTurn(); //playerOneWinPile??? pile for points, 4 kaarten vn zelfde soort (eg 4 kings = 1 pnt)
-        }
-    }
 
     private void playerTurn(String player, String otherPlayer) throws UnirestException {
         ArrayList<String> pilePlayer = apiCalls.listPiles(player, null);
