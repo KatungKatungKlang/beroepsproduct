@@ -51,7 +51,7 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
                 .asJson();
 
 
-  JSONArray sevenCards =  response.getBody().getObject().getJSONArray("cards");
+    JSONArray sevenCards = response.getBody().getObject().getJSONArray("cards");
 
 
     for(int i = 0; i< sevenCards.length(); i++){
@@ -136,11 +136,13 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
    return pile;
 }
 
-public ArrayList<String> returnPile(String pileName, String deckIds) throws UnirestException {
+    public ArrayList<String> returnPile(String pileName, String deckIds) throws UnirestException {
         Unirest.setTimeouts(0, 0);
         HttpResponse<JsonNode> response = null;
         ArrayList<String> pile = new ArrayList<>();
         JSONArray pileCards = new JSONArray();
+
+
 
 
         try {
@@ -154,21 +156,24 @@ public ArrayList<String> returnPile(String pileName, String deckIds) throws Unir
                     getJSONObject(pileName).
                     getJSONArray("cards");
 
+        }catch(UnirestException u){
+            System.out.println(pileName + " doesn't exist");
+
+
         }catch (JSONException e) {
             pile.add(e.getMessage() + " uhh meow?");
             return pile;
         }
 
 
-    for(int i = 0; i<pileCards.length(); i++) {
-       pile.add(pileCards.getJSONObject(i).getString("code"));
-    }
+        for(int i = 0; i<pileCards.length(); i++) {
+            pile.add(pileCards.getJSONObject(i).getString("code"));
+        }
 
 //remove this line of code ffs:
-    pile.sort((a, b)-> b.substring(0, 1).compareTo(a.substring(0, 1)));
-   return pile;
-}
-
+        pile.sort((a, b)-> b.substring(0, 1).compareTo(a.substring(0, 1)));
+        return pile;
+    }
 
 
 public ArrayList<String> searchPileForCardContainingThisNumberOrChar(List<String> pile, String number){
