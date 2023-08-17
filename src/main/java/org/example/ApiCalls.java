@@ -7,7 +7,6 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ApiCalls {
@@ -52,7 +51,7 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
                 .asJson();
 
 
-  JSONArray sevenCards =  response.getBody().getObject().getJSONArray("cards");
+    JSONArray sevenCards = response.getBody().getObject().getJSONArray("cards");
 
 
     for(int i = 0; i< sevenCards.length(); i++){
@@ -66,15 +65,10 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
         String joinedString = String.join(",", cardsToAdd);
 
         Unirest.setTimeouts(0, 0);
-        HttpResponse<JsonNode> response = null;
-        try {
-             response =
-                    Unirest.get("https://deckofcardsapi.com/api/deck/" + deckId + "/pile/" + pileName + "/add/?cards="+ joinedString)
-                            .asJson();
-        } catch (UnirestException e) {
-            System.out.println(Arrays.toString(e.getStackTrace()));
-        }
 
+        HttpResponse<JsonNode> response =
+                Unirest.get("https://deckofcardsapi.com/api/deck/" + deckId + "/pile/" + pileName + "/add/?cards="+ joinedString)
+                        .asJson();
 
 
     }
@@ -121,8 +115,9 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
                     getJSONArray("cards");
 
         }catch(UnirestException u){
+            if(response==null){
                 System.out.println(pileName + " doesn't exist");
-
+            }
 
         }catch (JSONException e){
             System.out.println(e.getMessage());
@@ -141,7 +136,7 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
    return pile;
 }
 
-public ArrayList<String> returnPile(String pileName, String deckIds) throws UnirestException {
+    public ArrayList<String> returnPile(String pileName, String deckIds) throws UnirestException {
         Unirest.setTimeouts(0, 0);
         HttpResponse<JsonNode> response = null;
         ArrayList<String> pile = new ArrayList<>();
@@ -150,7 +145,7 @@ public ArrayList<String> returnPile(String pileName, String deckIds) throws Unir
 
 
 
-    try {
+        try {
             response =
                     Unirest.get("https://deckofcardsapi.com/api/deck/" + deckId + "/pile/" + pileName + "/list/")
                             .asJson();
@@ -161,7 +156,7 @@ public ArrayList<String> returnPile(String pileName, String deckIds) throws Unir
                     getJSONObject(pileName).
                     getJSONArray("cards");
 
-    }catch(UnirestException u){
+        }catch(UnirestException u){
             System.out.println(pileName + " doesn't exist");
 
 
@@ -171,15 +166,14 @@ public ArrayList<String> returnPile(String pileName, String deckIds) throws Unir
         }
 
 
-    for(int i = 0; i<pileCards.length(); i++) {
-       pile.add(pileCards.getJSONObject(i).getString("code"));
-    }
+        for(int i = 0; i<pileCards.length(); i++) {
+            pile.add(pileCards.getJSONObject(i).getString("code"));
+        }
 
 //remove this line of code ffs:
-    pile.sort((a, b)-> b.substring(0, 1).compareTo(a.substring(0, 1)));
-   return pile;
-}
-
+        pile.sort((a, b)-> b.substring(0, 1).compareTo(a.substring(0, 1)));
+        return pile;
+    }
 
 
 public ArrayList<String> searchPileForCardContainingThisNumberOrChar(List<String> pile, String number){
