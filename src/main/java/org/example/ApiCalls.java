@@ -104,7 +104,6 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
         }
         return drawnCards[0];
 
-
     }
 
     public ArrayList<String> listPiles(String pileName, String deckIds) throws UnirestException {
@@ -169,8 +168,6 @@ public ArrayList<String> returnPile(String pileName, String deckIds) throws Unir
             return pile;
         }
 
-        // ? make this return an array with the error msg as an element daarna ga je naar check method
-
 
     for(int i = 0; i<pileCards.length(); i++) {
        pile.add(pileCards.getJSONObject(i).getString("code"));
@@ -180,7 +177,6 @@ public ArrayList<String> returnPile(String pileName, String deckIds) throws Unir
     pile.sort((a, b)-> b.substring(0, 1).compareTo(a.substring(0, 1)));
    return pile;
 }
-
 
 
 //todo: move this to an utility class or some shit dawg(static class)
@@ -193,9 +189,7 @@ public ArrayList<String> searchPileForCardContainingThisNumberOrChar(ArrayList<S
            cardsOtherPlayerHas.add(element);
         }
     });
-
     return cardsOtherPlayerHas;
-
 }
 
 
@@ -212,12 +206,10 @@ HttpResponse<JsonNode> response = null;
             return true;
         } else {
             return false;
-
         }
 }
 
     public void oppenheimer(String pileToNuke, String deckId)throws UnirestException{
-
 
     listPiles(pileToNuke, null);
 
@@ -226,7 +218,6 @@ HttpResponse<JsonNode> response = null;
         HttpResponse<JsonNode> response = null;
 
         try {
-
                     response = Unirest.get("https://deckofcardsapi.com/api/deck/" + deckId +
                             "/pile/" + pileToNuke + "/draw/?count=" + nukeThisPile.size()).asJson();
 
@@ -235,9 +226,7 @@ HttpResponse<JsonNode> response = null;
             System.out.println();
             System.out.println("Pile " +  pileToNuke + " wasn't created yet!");
         }
-
         listPiles(pileToNuke, getDeckId());
-
     }
 
 }
