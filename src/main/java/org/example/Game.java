@@ -15,11 +15,21 @@ public class Game {
     ApiCalls apiCalls;
     Scanner scanner;
 
-    public Game() {
+    private static Game instance;
+
+    private Game() {
         scanner = new Scanner(System.in);
 
         apiCalls = new ApiCalls();
 
+
+    }
+
+    public static Game getInstance(){
+        if (Game.instance == null) {
+            Game.instance = new Game();
+        }
+            return Game.instance;
 
     }
 
@@ -47,8 +57,8 @@ public class Game {
         apiCalls.addingToPiles(null, "playerTwo", drawnCardsForPlayerTwo);
 
         while(true) {
-            playerOneTurn();
-            playerTwoTurn();
+            playerTurn("playerOne", "playerTwo");
+            playerTurn("playerTwo", "playerOne");
 
         }
 
@@ -114,17 +124,17 @@ public class Game {
         }
     }
 
-    /*private void playerTurn(String player, String otherPlayer) throws UnirestException{
+    private void playerTurn(String player, String otherPlayer) throws UnirestException {
         ArrayList<String> pilePlayer = apiCalls.listPiles(player, null);
         apiCalls.listPiles(otherPlayer, null);
 
 
-        System.out.println("Player + " + player+ ", Which card do you want?");
+        System.out.println(player + ", Which card do you want?");
 
         String wantedCard = scanner.nextLine();
         wantedCard = wantedCard.toUpperCase();
 
-        ArrayList<String> cardsINeed = apiCalls.searchPileForCardContainingThisNumberOrChar(otherPlayer, wantedCard);//todo: remove hardcoded variables maybe?
+        ArrayList<String> cardsINeed = apiCalls.searchPileForCardContainingThisNumberOrChar(apiCalls.returnPile(otherPlayer, null), wantedCard);//todo: remove hardcoded variables maybe?
         System.out.println(cardsINeed);
 
         if (cardsINeed.isEmpty()) {
@@ -139,9 +149,9 @@ public class Game {
             apiCalls.drawingFromPile(cardsINeed, otherPlayer);
             apiCalls.addingToPiles(null, player, cardsINeed.toArray(new String[0]));
             checkCards(player);
-             //playerOneWinPile??? pile for points, 4 kaarten vn zelfde soort (eg 4 kings = 1 pnt)
+            playerTurn(player, otherPlayer); //pile for points, 4 kaarten vn zelfde soort (eg 4 kings = 1 pnt)
         }
-    }*/
+    }
 
     private void checkCards(String player) throws UnirestException {
         //4 zelfde cards in player pile, word dan extracted naar player win pile
@@ -196,7 +206,7 @@ public class Game {
     private void alternateWinConCheck() throws UnirestException {
 
         //als winplayerone zn pile niet leeg is gaat hij checken
-        if(!apiCalls.returnPile("winPlayerOne", null).get(0).contains("meow")&&
+        if(!apiCalls.returnPile("winPlayerOne", null).get(0).contains("meow")||
         !apiCalls.returnPile("winPlayerTwo", null).get(0).contains("meow")) {
 
             int setsPlayerOne = apiCalls.returnPile("winPlayerOne", null).size()/4;
