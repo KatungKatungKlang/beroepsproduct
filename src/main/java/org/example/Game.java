@@ -135,8 +135,8 @@ public class Game {
     }
 
 
-    private void alternateWinConCheck() throws UnirestException {
-
+    public void alternateWinConCheck() throws UnirestException {
+        System.out.println("wj");
         //als winplayerone zn pile niet leeg is gaat hij checken
         if(!apiCalls.returnPile("winPlayerOne", null).get(0).contains("meow")||
         !apiCalls.returnPile("winPlayerTwo", null).get(0).contains("meow")) {
@@ -144,6 +144,7 @@ public class Game {
             int setsPlayerOne = apiCalls.returnPile("winPlayerOne", null).size()/4;
             int setsPlayerTwo = apiCalls.returnPile("winPlayerTwo", null).size()/4;
 
+            System.out.println("test");
 
             if (setsPlayerOne >= 1) {
                 System.out.println("Congwatulations, UwU !!! You won, Player One <3<3<3 *Nuzzles your Weewee*");
@@ -153,6 +154,7 @@ public class Game {
                 resetGame();
             }
         }
+
     }
 
     //comment
@@ -162,7 +164,7 @@ public class Game {
         if (answer.equals("y")) {
             System.out.println("Starting new game!");
             apiCalls.oppenheimer("playerOne", apiCalls.getDeckId());
-            apiCalls.oppenheimer("playerTwo",      apiCalls.getDeckId());
+            apiCalls.oppenheimer("playerTwo", apiCalls.getDeckId());
             apiCalls.oppenheimer("winPlayerOne", apiCalls.getDeckId());
             apiCalls.oppenheimer("winPlayerTwo", apiCalls.getDeckId());
 
