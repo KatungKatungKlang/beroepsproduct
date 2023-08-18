@@ -38,7 +38,6 @@ public class Game {
         7 cards worden aan elke player gegeven
         vervolgens wordt er een pile(hand) gemaakt voor elke player en hierin
         worden de gedrawn cards gestored
-
 */
 
         apiCalls.setDeckId(apiCalls.getNewDeck());
@@ -51,7 +50,6 @@ public class Game {
         apiCalls.listPiles("winPlayerOne", null);
         apiCalls.listPiles("winPlayerTwo", null);
 
-
         apiCalls.addingToPiles(null, "playerOne", drawnCardsForPlayerOne);
         apiCalls.addingToPiles(null, "playerTwo", drawnCardsForPlayerTwo);
 
@@ -60,12 +58,7 @@ public class Game {
             playerTurn("playerTwo", "playerOne");
 
         }
-
-
     }
-
-
-
 
 
     public void playerTurn(String player, String otherPlayer) throws UnirestException {
@@ -99,6 +92,7 @@ public class Game {
 
     private void checkCards(String player) throws UnirestException {
         //4 zelfde cards in player pile, word dan extracted naar player win pile
+
         Map<String, Integer> cardCounts = new HashMap<>(); // Map to store card counts
         ArrayList<String> removedCards = new ArrayList<>(); //arrayList to store elements to remove
 
@@ -141,12 +135,12 @@ public class Game {
             int setsPlayerOne = apiCalls.returnPile("winPlayerOne", null).size()/4;
             int setsPlayerTwo = apiCalls.returnPile("winPlayerTwo", null).size()/4;
 
-            System.out.println("test");
+            System.out.println();
 
-            if (setsPlayerOne >= 1) {
+            if (setsPlayerOne >= 7) {
                 System.out.println("Congratulations, Player One You Have Won the Game!");
                 resetGame();
-            } else if (setsPlayerTwo >= 1) {
+            } else if (setsPlayerTwo >= 7) {
                 System.out.println("Congratulations, Player Two You Have Won the Game!");
                 resetGame();
             }
@@ -154,6 +148,7 @@ public class Game {
 
     }
 
+    //comment
     private void resetGame() throws UnirestException {
         System.out.println("Do you wanna start a new game? y/n");
         String answer = scanner.nextLine().toLowerCase();
