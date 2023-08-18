@@ -45,10 +45,7 @@ public class Game {
         String[] drawnCardsForPlayerOne = apiCalls.drawCardFromDeck("7");
         String[] drawnCardsForPlayerTwo = apiCalls.drawCardFromDeck("7");
 
-        apiCalls.listPiles("playerOne", null);
-        apiCalls.listPiles("playerTwo", null);
-        apiCalls.listPiles("winPlayerOne", null);
-        apiCalls.listPiles("winPlayerTwo", null);
+
 
         apiCalls.addingToPiles(null, "playerOne", drawnCardsForPlayerOne);
         apiCalls.addingToPiles(null, "playerTwo", drawnCardsForPlayerTwo);
@@ -72,7 +69,7 @@ public class Game {
         wantedCard = wantedCard.toUpperCase();
 
         ArrayList<String> cardsINeed = apiCalls.searchPileForCardContainingThisNumberOrChar(apiCalls.returnPile(otherPlayer, null), wantedCard);
-        System.out.println(cardsINeed);
+
 
         if (cardsINeed.isEmpty()) {
             System.out.println("Go Fish!");
@@ -137,10 +134,10 @@ public class Game {
 
             System.out.println();
 
-            if (setsPlayerOne >= 7) {
+            if (setsPlayerOne >= 1) {
                 System.out.println("Congratulations, Player One You Have Won the Game!");
                 resetGame();
-            } else if (setsPlayerTwo >= 7) {
+            } else if (setsPlayerTwo >= 1) {
                 System.out.println("Congratulations, Player Two You Have Won the Game!");
                 resetGame();
             }

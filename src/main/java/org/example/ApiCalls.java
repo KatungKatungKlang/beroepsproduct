@@ -73,7 +73,7 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
 
 
     public String drawingFromPile(ArrayList<String>cardsINeed, String pileName) throws UnirestException {
-        System.out.println("card i need is: " + cardsINeed);
+        System.out.println("Card(s) to steal: " + cardsINeed);
 
         String joinedString = String.join(",", cardsINeed);
 
@@ -200,9 +200,8 @@ HttpResponse<JsonNode> response = null;
 
     public void emptyPile(String pileToRemove, String deckId)throws UnirestException{
 
-    listPiles(pileToRemove, null);
 
-        System.out.println("test: " + deckId);
+
         ArrayList<String> EmptyThisPile = returnPile(pileToRemove, getDeckId());
         HttpResponse<JsonNode> response = null;
 
@@ -210,11 +209,11 @@ HttpResponse<JsonNode> response = null;
                     response = Unirest.get("https://deckofcardsapi.com/api/deck/" + deckId +
                             "/pile/" + pileToRemove + "/draw/?count=" + EmptyThisPile.size()).asJson();
 
-            System.out.println(response.getBody());
+
         } catch (UnirestException e){
-            System.out.println("Pile " +  pileToRemove + " wasn't created yet!");
+            System.out.println("Creating piles...");
         }
-        listPiles(pileToRemove, getDeckId());
+
     }
 
 }
