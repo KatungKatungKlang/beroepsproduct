@@ -11,8 +11,6 @@ import java.util.List;
 
 public class ApiCalls {
 
-
-
     private String deckId="";
     public ApiCalls(){
 
@@ -143,8 +141,6 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
         JSONArray pileCards = new JSONArray();
 
 
-
-
         try {
             response =
                     Unirest.get("https://deckofcardsapi.com/api/deck/" + deckId + "/pile/" + pileName + "/list/")
@@ -159,12 +155,10 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
         }catch(UnirestException u){
             System.out.println(pileName + " doesn't exist");
 
-
         }catch (JSONException e) {
-            pile.add(e.getMessage() + " uhh meow?");
+            pile.add(e.getMessage());
             return pile;
         }
-
 
         for(int i = 0; i<pileCards.length(); i++) {
             pile.add(pileCards.getJSONObject(i).getString("code"));
@@ -217,8 +211,7 @@ HttpResponse<JsonNode> response = null;
                             "/pile/" + pileToRemove + "/draw/?count=" + EmptyThisPile.size()).asJson();
 
             System.out.println(response.getBody());
-        } catch (UnirestException e) {
-            System.out.println();
+        } catch (UnirestException e){
             System.out.println("Pile " +  pileToRemove + " wasn't created yet!");
         }
         listPiles(pileToRemove, getDeckId());
