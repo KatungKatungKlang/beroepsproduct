@@ -73,7 +73,7 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
 
     }
 
-//Volgensmij wordt dit voor meerdere dingen gebruikt, 1 waarvan om die kaarten van 1 player te adden op een andere zn pile
+
     public String drawingFromPile(ArrayList<String>cardsINeed, String pileName) throws UnirestException {
         System.out.println("card i need is: " + cardsINeed);
 
@@ -121,7 +121,7 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
 
         }catch (JSONException e){
             System.out.println(e.getMessage());
-        pile.add(e.getMessage() + " uhh meow?");
+        pile.add(e.getMessage() + "error?");
         return pile;
     }
 
@@ -170,7 +170,6 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
             pile.add(pileCards.getJSONObject(i).getString("code"));
         }
 
-//remove this line of code ffs:
         pile.sort((a, b)-> b.substring(0, 1).compareTo(a.substring(0, 1)));
         return pile;
     }
@@ -205,24 +204,24 @@ HttpResponse<JsonNode> response = null;
         }
 }
 
-    public void oppenheimer(String pileToNuke, String deckId)throws UnirestException{
+    public void emptyPile(String pileToRemove, String deckId)throws UnirestException{
 
-    listPiles(pileToNuke, null);
+    listPiles(pileToRemove, null);
 
         System.out.println("test: " + deckId);
-        ArrayList<String> nukeThisPile = returnPile(pileToNuke, getDeckId());
+        ArrayList<String> EmptyThisPile = returnPile(pileToRemove, getDeckId());
         HttpResponse<JsonNode> response = null;
 
         try {
                     response = Unirest.get("https://deckofcardsapi.com/api/deck/" + deckId +
-                            "/pile/" + pileToNuke + "/draw/?count=" + nukeThisPile.size()).asJson();
+                            "/pile/" + pileToRemove + "/draw/?count=" + EmptyThisPile.size()).asJson();
 
             System.out.println(response.getBody());
         } catch (UnirestException e) {
             System.out.println();
-            System.out.println("Pile " +  pileToNuke + " wasn't created yet!");
+            System.out.println("Pile " +  pileToRemove + " wasn't created yet!");
         }
-        listPiles(pileToNuke, getDeckId());
+        listPiles(pileToRemove, getDeckId());
     }
 
 }

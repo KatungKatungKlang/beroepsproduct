@@ -79,7 +79,7 @@ public class Game {
         String wantedCard = scanner.nextLine();
         wantedCard = wantedCard.toUpperCase();
 
-        ArrayList<String> cardsINeed = apiCalls.searchPileForCardContainingThisNumberOrChar(apiCalls.returnPile(otherPlayer, null), wantedCard);//todo: remove hardcoded variables maybe?
+        ArrayList<String> cardsINeed = apiCalls.searchPileForCardContainingThisNumberOrChar(apiCalls.returnPile(otherPlayer, null), wantedCard);
         System.out.println(cardsINeed);
 
         if (cardsINeed.isEmpty()) {
@@ -136,10 +136,9 @@ public class Game {
 
 
     public void alternateWinConCheck() throws UnirestException {
-        System.out.println("wj");
         //als winplayerone zn pile niet leeg is gaat hij checken
-        if(!apiCalls.returnPile("winPlayerOne", null).get(0).contains("meow")||
-        !apiCalls.returnPile("winPlayerTwo", null).get(0).contains("meow")) {
+        if(!apiCalls.returnPile("winPlayerOne", null).get(0).contains("error")||
+        !apiCalls.returnPile("winPlayerTwo", null).get(0).contains("error")) {
 
             int setsPlayerOne = apiCalls.returnPile("winPlayerOne", null).size()/4;
             int setsPlayerTwo = apiCalls.returnPile("winPlayerTwo", null).size()/4;
@@ -147,7 +146,7 @@ public class Game {
             System.out.println("test");
 
             if (setsPlayerOne >= 1) {
-                System.out.println("Congwatulations, UwU !!! You won, Player One <3<3<3 *Nuzzles your Weewee*");
+                System.out.println("Congratulations, Player One You Have Won the Game!");
                 resetGame();
             } else if (setsPlayerTwo >= 1) {
                 System.out.println("Congwatulations, UwU !!! You won, Player Two <3<3<3 *Nuzzles your Weewee*");
@@ -163,10 +162,10 @@ public class Game {
         String answer = scanner.nextLine().toLowerCase();
         if (answer.equals("y")) {
             System.out.println("Starting new game!");
-            apiCalls.oppenheimer("playerOne", apiCalls.getDeckId());
-            apiCalls.oppenheimer("playerTwo", apiCalls.getDeckId());
-            apiCalls.oppenheimer("winPlayerOne", apiCalls.getDeckId());
-            apiCalls.oppenheimer("winPlayerTwo", apiCalls.getDeckId());
+            apiCalls.emptyPile("playerOne", apiCalls.getDeckId());
+            apiCalls.emptyPile("playerTwo", apiCalls.getDeckId());
+            apiCalls.emptyPile("winPlayerOne", apiCalls.getDeckId());
+            apiCalls.emptyPile("winPlayerTwo", apiCalls.getDeckId());
 
             String newDeck = apiCalls.getNewDeck();
             apiCalls.setDeckId(newDeck);
@@ -174,7 +173,7 @@ public class Game {
             start();
 
         } else {
-            System.out.println("You should kys now! nyaaa <3");
+            System.out.println("Thank you for playing!");
         }
 
     }
