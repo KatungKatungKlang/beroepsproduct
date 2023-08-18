@@ -35,19 +35,6 @@ class GameTest {
 
 
 
-/*    @Test
-    void testPlayerTurn() throws UnirestException { // todo: fix this
-        when(mockApiCalls.listPiles(anyString(), any())).thenReturn(new ArrayList<>());
-        when(mockApiCalls.drawCardFromDeck(eq("1"))).thenReturn(new String[] {""});
-        when(mockApiCalls.searchPileForCardContainingThisNumberOrChar(anyList(), anyString())).thenReturn(new ArrayList<>());
-
-        game.playerTurn("playerOne", "playerTwo");
-
-        verify(mockApiCalls, times(1)).drawCardFromDeck(eq("1"));
-        verify(mockApiCalls, times(1)).addingToPiles(eq(null), eq("playerOne"), eq(new String[] {""}));
-    }*/
-
-
 
 
     @Test

@@ -10,15 +10,9 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws UnirestException, IOException {
 
+        Game game = Game.getInstance();
 
-    /*    ApiCalls apiCalls = new ApiCalls();
-        String newDeckId = apiCalls.getNewDeck();
-        System.out.println(newDeckId);*/
-
-
-        Game gaem = Game.getInstance();
-
-        gaem.start();
+        game.start();
 
 
     }

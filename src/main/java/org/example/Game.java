@@ -125,7 +125,7 @@ public class Game {
 
 
     public void alternateWinConCheck() throws UnirestException {
-        //als winplayerone zn pile niet leeg is gaat hij checken
+
         if(!apiCalls.returnPile("winPlayerOne", null).get(0).contains("error")||
         !apiCalls.returnPile("winPlayerTwo", null).get(0).contains("error")) {
 
@@ -147,7 +147,7 @@ public class Game {
 
     //comment
     private void resetGame() throws UnirestException {
-        System.out.println("Do you wanna start a new game? y/n");
+        System.out.println("Do you want to start a new game? y/n");
         String answer = scanner.nextLine().toLowerCase();
         if (answer.equals("y")) {
             System.out.println("Starting new game!");
@@ -163,6 +163,7 @@ public class Game {
 
         } else {
             System.out.println("Thank you for playing!");
+            System.exit(0);
         }
 
     }

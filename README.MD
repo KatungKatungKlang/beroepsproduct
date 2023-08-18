@@ -1,9 +1,9 @@
 # Beroepsproduct Data Structures & Algorithms
 
 ## Groepsleden:
-- Sameer Kewal:SE/1121/024
-- Gavin Soemotinojo SE/1121/053
-- Amisha Boedhoe SE/1121/whoknows
+- Sameer Kewal: SE/1121/024
+- Gavin Soemotinojo: SE/1121/053
+- Amisha Boedhoe: SE/1121/012
 
 
 ## Design Patterns:
