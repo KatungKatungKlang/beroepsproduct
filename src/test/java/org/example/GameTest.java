@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 class GameTest {
 
@@ -46,13 +45,13 @@ class GameTest {
             String[] drawnCardsForPlayerOne = apiCalls.drawCardFromDeck("7");
             String[] drawnCardsForPlayerTwo = apiCalls.drawCardFromDeck("7");
 
-            apiCalls.addingToPiles(null, "playerOne", drawnCardsForPlayerOne);
-            apiCalls.addingToPiles(null, "playerTwo", drawnCardsForPlayerTwo);
+            apiCalls.addingToPiles("playerOne", drawnCardsForPlayerOne);
+            apiCalls.addingToPiles("playerTwo", drawnCardsForPlayerTwo);
 
             assertEquals(7, drawnCardsForPlayerOne.length);
             assertEquals(7, drawnCardsForPlayerTwo.length);
-            assertEquals(7, apiCalls.returnPile("playerOne", null).size());
-            assertEquals(7, apiCalls.returnPile("playerTwo", null).size());
+            assertEquals(7, apiCalls.returnPile("playerOne").size());
+            assertEquals(7, apiCalls.returnPile("playerTwo").size());
 
 
         } catch (UnirestException e) {
@@ -69,17 +68,17 @@ class GameTest {
         String[] drawnCardsForPlayerOne = apiCalls.drawCardFromDeck("7");
         String[] drawnCardsForPlayerTwo = apiCalls.drawCardFromDeck("7");
 
-        apiCalls.addingToPiles(null, "playerOne", drawnCardsForPlayerOne);
-        apiCalls.addingToPiles(null, "playerTwo", drawnCardsForPlayerTwo);
+        apiCalls.addingToPiles("playerOne", drawnCardsForPlayerOne);
+        apiCalls.addingToPiles("playerTwo", drawnCardsForPlayerTwo);
 
-        System.out.println(apiCalls.returnPile("playerOne", null));
-        System.out.println(apiCalls.returnPile("playerTwo", null));
+        System.out.println(apiCalls.returnPile("playerOne"));
+        System.out.println(apiCalls.returnPile("playerTwo"));
 
         apiCalls.emptyPile("playerOne", apiCalls.getDeckId());
         apiCalls.emptyPile("playerTwo", apiCalls.getDeckId());
 
-        assertEquals(0, apiCalls.returnPile("playerOne", null).size());
-        assertEquals(0, apiCalls.returnPile("playerTwo", null).size());
+        assertEquals(0, apiCalls.returnPile("playerOne").size());
+        assertEquals(0, apiCalls.returnPile("playerTwo").size());
     }
 
 
@@ -106,14 +105,14 @@ class GameTest {
         losingPile.add("4H");
         losingPile.add("4C");
 
-        when(mockApiCalls.returnPile(eq("winPlayerOne"), any())).thenReturn(winningPile);
-        when(mockApiCalls.returnPile(eq("winPlayerTwo"), any())).thenReturn(losingPile);
+        when(mockApiCalls.returnPile(eq("winPlayerOne"))).thenReturn(winningPile);
+        when(mockApiCalls.returnPile(eq("winPlayerTwo"))).thenReturn(losingPile);
 
-        if(!mockApiCalls.returnPile("winPlayerOne", null).get(0).contains("error")||
-                !mockApiCalls.returnPile("winPlayerTwo", null).get(0).contains("error")) {
+        if(!mockApiCalls.returnPile("winPlayerOne").get(0).contains("error")||
+                !mockApiCalls.returnPile("winPlayerTwo").get(0).contains("error")) {
 
-            int setsPlayerOne = mockApiCalls.returnPile("winPlayerOne", null).size()/4;
-            int setsPlayerTwo = mockApiCalls.returnPile("winPlayerTwo", null).size()/4;
+            int setsPlayerOne = mockApiCalls.returnPile("winPlayerOne").size()/4;
+            int setsPlayerTwo = mockApiCalls.returnPile("winPlayerTwo").size()/4;
 
             assertTrue(setsPlayerOne>setsPlayerTwo);
         }
@@ -140,14 +139,14 @@ class GameTest {
         losingPile.add("4H");
         losingPile.add("4C");
 
-        when(mockApiCalls.returnPile(eq("winPlayerOne"), any())).thenReturn(losingPile);
-        when(mockApiCalls.returnPile(eq("winPlayerTwo"), any())).thenReturn(winningPile);
+        when(mockApiCalls.returnPile(eq("winPlayerOne"))).thenReturn(losingPile);
+        when(mockApiCalls.returnPile(eq("winPlayerTwo"))).thenReturn(winningPile);
 
-        if(!mockApiCalls.returnPile("winPlayerOne", null).get(0).contains("error")||
-                !mockApiCalls.returnPile("winPlayerTwo", null).get(0).contains("error")) {
+        if(!mockApiCalls.returnPile("winPlayerOne").get(0).contains("error")||
+                !mockApiCalls.returnPile("winPlayerTwo").get(0).contains("error")) {
 
-            int setsPlayerOne = mockApiCalls.returnPile("winPlayerOne", null).size()/4;
-            int setsPlayerTwo = mockApiCalls.returnPile("winPlayerTwo", null).size()/4;
+            int setsPlayerOne = mockApiCalls.returnPile("winPlayerOne").size()/4;
+            int setsPlayerTwo = mockApiCalls.returnPile("winPlayerTwo").size()/4;
 
             assertFalse(setsPlayerOne>setsPlayerTwo);
         }

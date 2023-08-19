@@ -58,7 +58,7 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
     return drawnCards;
 }
 
-    public void addingToPiles(String deckIds, String pileName, String[] cardsToAdd) throws UnirestException {
+    public void addingToPiles(String pileName, String[] cardsToAdd) throws UnirestException {
 
         String joinedString = String.join(",", cardsToAdd);
 
@@ -73,7 +73,7 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
 
 
     public String drawingFromPile(ArrayList<String>cardsINeed, String pileName) throws UnirestException {
-        System.out.println("Card(s) to steal: " + cardsINeed);
+        System.out.println("Card(s) to draw: " + cardsINeed);
 
         String joinedString = String.join(",", cardsINeed);
 
@@ -95,7 +95,7 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
 
     }
 
-    public ArrayList<String> listPiles(String pileName, String deckIds) throws UnirestException {
+    public ArrayList<String> listPiles(String pileName) throws UnirestException {
         Unirest.setTimeouts(0, 0);
         HttpResponse<JsonNode> response = null;
         ArrayList<String> pile = new ArrayList<>();
@@ -127,14 +127,14 @@ public String[] drawCardFromDeck(String numberOfCardsToDraw) throws UnirestExcep
        pile.add(pileCards.getJSONObject(i).getString("code"));
     }
 
-//remove this line of code:
+
     pile.sort((a, b)-> b.substring(0, 1).compareTo(a.substring(0, 1)));
     System.out.println("player " + pileName + " cards: " + pile + " and his hand has " + pile.size() + " cards");
 
    return pile;
 }
 
-    public ArrayList<String> returnPile(String pileName, String deckIds) throws UnirestException {
+    public ArrayList<String> returnPile(String pileName) throws UnirestException {
         Unirest.setTimeouts(0, 0);
         HttpResponse<JsonNode> response = null;
         ArrayList<String> pile = new ArrayList<>();
@@ -202,7 +202,7 @@ HttpResponse<JsonNode> response = null;
 
 
 
-        ArrayList<String> EmptyThisPile = returnPile(pileToRemove, getDeckId());
+        ArrayList<String> EmptyThisPile = returnPile(pileToRemove);
         HttpResponse<JsonNode> response = null;
 
         try {

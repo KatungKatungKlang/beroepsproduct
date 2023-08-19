@@ -47,8 +47,8 @@ public class Game {
 
 
 
-        apiCalls.addingToPiles(null, "playerOne", drawnCardsForPlayerOne);
-        apiCalls.addingToPiles(null, "playerTwo", drawnCardsForPlayerTwo);
+        apiCalls.addingToPiles("playerOne", drawnCardsForPlayerOne);
+        apiCalls.addingToPiles("playerTwo", drawnCardsForPlayerTwo);
 
         while(true) {
             playerTurn("playerOne", "playerTwo");
@@ -59,8 +59,8 @@ public class Game {
 
 
     public void playerTurn(String player, String otherPlayer) throws UnirestException {
-        ArrayList<String> pilePlayer = apiCalls.listPiles(player, null);
-        apiCalls.listPiles(otherPlayer, null);
+        ArrayList<String> pilePlayer = apiCalls.listPiles(player);
+        apiCalls.listPiles(otherPlayer);
 
 
         System.out.println(player + ", Which card do you want?");
@@ -68,20 +68,20 @@ public class Game {
         String wantedCard = scanner.nextLine();
         wantedCard = wantedCard.toUpperCase();
 
-        ArrayList<String> cardsINeed = apiCalls.searchPileForCardContainingThisNumberOrChar(apiCalls.returnPile(otherPlayer, null), wantedCard);
+        ArrayList<String> cardsINeed = apiCalls.searchPileForCardContainingThisNumberOrChar(apiCalls.returnPile(otherPlayer), wantedCard);
 
 
         if (cardsINeed.isEmpty()) {
             System.out.println("Go Fish!");
             String[] goFished = apiCalls.drawCardFromDeck("1");
             System.out.println(goFished[0]); //now we add to pile
-            apiCalls.addingToPiles(null, player, goFished);
+            apiCalls.addingToPiles(player, goFished);
             checkCards(player);
 
 
         } else {
             apiCalls.drawingFromPile(cardsINeed, otherPlayer);
-            apiCalls.addingToPiles(null, player, cardsINeed.toArray(new String[0]));
+            apiCalls.addingToPiles(player, cardsINeed.toArray(new String[0]));
             checkCards(player);
             playerTurn(player, otherPlayer);
         }
@@ -93,7 +93,7 @@ public class Game {
         Map<String, Integer> cardCounts = new HashMap<>(); // Map to store card counts
         ArrayList<String> removedCards = new ArrayList<>(); //arrayList to store elements to remove
 
-        ArrayList<String> playersPiles = apiCalls.listPiles(player, null);
+        ArrayList<String> playersPiles = apiCalls.listPiles(player);
         for (String pile : playersPiles) {
             String card = pile.substring(0, 1);
 
@@ -107,17 +107,17 @@ public class Game {
         }
         System.out.println(player + ": " + cardCounts);
         if (removedCards.isEmpty()) {
-            //do nothing this is intentional do not change or everything breaks
+            //do nothing
 
         } else {
             if (player.equals("playerOne")) {
                 apiCalls.drawingFromPile(removedCards, player);
-                apiCalls.addingToPiles(null, "winPlayerOne", removedCards.toArray(new String[0]));
-                apiCalls.listPiles("winPlayerOne", null);
+                apiCalls.addingToPiles("winPlayerOne", removedCards.toArray(new String[0]));
+                apiCalls.listPiles("winPlayerOne");
             } else {
                 apiCalls.drawingFromPile(removedCards, player);
-                apiCalls.addingToPiles(null, "winPlayerTwo", removedCards.toArray(new String[0]));
-                apiCalls.listPiles("winPlayerTwo", null);
+                apiCalls.addingToPiles("winPlayerTwo", removedCards.toArray(new String[0]));
+                apiCalls.listPiles("winPlayerTwo");
             }
         }
         alternateWinConCheck();
@@ -126,11 +126,11 @@ public class Game {
 
     public void alternateWinConCheck() throws UnirestException {
 
-        if(!apiCalls.returnPile("winPlayerOne", null).get(0).contains("error")||
-        !apiCalls.returnPile("winPlayerTwo", null).get(0).contains("error")) {
+        if(!apiCalls.returnPile("winPlayerOne").get(0).contains("error")||
+        !apiCalls.returnPile("winPlayerTwo").get(0).contains("error")) {
 
-            int setsPlayerOne = apiCalls.returnPile("winPlayerOne", null).size()/4;
-            int setsPlayerTwo = apiCalls.returnPile("winPlayerTwo", null).size()/4;
+            int setsPlayerOne = apiCalls.returnPile("winPlayerOne").size()/4;
+            int setsPlayerTwo = apiCalls.returnPile("winPlayerTwo").size()/4;
 
             System.out.println();
 
